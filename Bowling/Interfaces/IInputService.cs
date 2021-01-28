@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bowling.Services
+namespace Bowling.Interfaces
 {
     public interface IInputService
     {
