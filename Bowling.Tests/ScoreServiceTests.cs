@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using Bowling.Models;
 using Bowling.Services;
+using Bowling.Tests.TestData.Frames;
+using FluentAssertions;
 using Xunit;
 
 namespace Bowling.Tests
@@ -12,16 +16,15 @@ namespace Bowling.Tests
             sut = new ScoreService();
         }
 
-        [Fact]
-        public void GetFinalScore_GivenInput_ShouldReturnScore()
+        [Theory]
+        [ClassData(typeof(AverageFrames))]
+        [ClassData(typeof(AverageFramesWithFinalBonusRoll))]
+        [ClassData(typeof(AllStrikes))]
+        [ClassData(typeof(WorstFrames))]
+        public void GetFinalScore_GivenFrames_ShouldCalculateScore(List<Frame> frames, int expectedScore)
         {
-
-        }
-
-        [Fact]
-        public void ShowPanelScore_GivenInput_ShouldReturnScore()
-        {
-
+            var result = sut.GetFinalScore(frames);
+            result.Should().Be(expectedScore);
         }
     }
 }

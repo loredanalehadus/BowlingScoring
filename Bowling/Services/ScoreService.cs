@@ -29,7 +29,19 @@ namespace Bowling.Services
 
                 if (frames[i].Rolls.Any(r => r.IsStrike))
                 {
-                    frames[i].Score = GetFrameScoreForStrike(frames, i);
+                    if (frames[i + 1].IsFinalFrame)
+                    {
+                        frames[i].Score = 10 + frames[i + 1].Rolls.Where(r => r.Try <= 2).Sum(r => r.Value);
+                        continue;
+                    }
+
+                    if (frames[i + 1].Rolls.Any(r => r.IsStrike))
+                    {
+                        frames[i].Score = 20 + frames[i + 2].Rolls.First(r => r.Try <= 1).Value;
+                        continue;
+                    }
+
+                    frames[i].Score = 10 + frames[i + 1].Rolls.Sum(r => r.Value);
                 }
             }
 
@@ -38,17 +50,12 @@ namespace Bowling.Services
 
         private int GetFrameScoreForStrike(List<Frame> frames, int index)
         {
-            if (index >= 9)
+            if (frames[index + 1].Rolls.Any(r => r.IsStrike))
             {
-                return frames[index].Rolls.First(r => r.Try == 1).Value + frames[index].Rolls.First(r => r.Try == 2).Value;
-            };
-
-            if (frames[index].Rolls.Any(r => r.IsStrike))
-            {
-                return frames[index].Score = 10 + GetFrameScoreForStrike(frames, index + 1);
+                return frames[index].Score = 20 + frames[index + 1].Rolls.First().Value;
             }
 
-            return frames[index + 1].Rolls.First(r => r.Try == 1).Value;
+            return frames[index].Score = 10 + frames[index + 1].Rolls.Sum(r => r.Value);
         }
 
     }
