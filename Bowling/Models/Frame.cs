@@ -6,6 +6,7 @@ namespace Bowling.Models
     {
         public int Number { get; set; }
         public bool IsFinalFrame { get; set; }
+        public int Score { get; set; }
         public List<Roll> Rolls { get; set; }
     }
 }

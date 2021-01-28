@@ -1,21 +1,55 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Bowling.Interfaces;
+using Bowling.Models;
 
 namespace Bowling.Services
 {
     public class ScoreService : IScoreService
     {
-        public int GetFinalScore(List<int> rolls)
+        public int GetFinalScore(List<Frame> frames)
         {
-            return 0;
+            for (int i = 0; i < frames.Count; i++)
+            {
+                if (frames[i].IsFinalFrame)
+                {
+                    frames[i].Score = frames[i].Rolls.Sum(r => r.Value);
+                    break;
+                }
+
+                if (!frames[i].Rolls.Any(r => r.IsStrike || r.IsSpare))
+                {
+                    frames[i].Score = frames[i].Rolls.Sum(r => r.Value);
+                }
+
+                if (frames[i].Rolls.Any(r => r.IsSpare))
+                {
+                    frames[i].Score = 10 + frames[i + 1].Rolls.First(r => r.Try == 1).Value;
+                }
+
+                if (frames[i].Rolls.Any(r => r.IsStrike))
+                {
+                    frames[i].Score = GetFrameScoreForStrike(frames, i);
+                }
+            }
+
+            return frames.Sum(f => f.Score);
         }
 
-        public string ShowPanelScore(List<int> rolls)
+        private int GetFrameScoreForStrike(List<Frame> frames, int index)
         {
-            var output = new StringBuilder().Append("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |");
+            if (index >= 9)
+            {
+                return frames[index].Rolls.First(r => r.Try == 1).Value + frames[index].Rolls.First(r => r.Try == 2).Value;
+            };
 
-            return output.ToString();
+            if (frames[index].Rolls.Any(r => r.IsStrike))
+            {
+                return frames[index].Score = 10 + GetFrameScoreForStrike(frames, index + 1);
+            }
+
+            return frames[index + 1].Rolls.First(r => r.Try == 1).Value;
         }
+
     }
 }

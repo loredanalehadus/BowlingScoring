@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using Bowling.Models;
 
 namespace Bowling.Interfaces
 {
     public interface IScoreService
     {
-        int GetFinalScore(List<int> rolls);
-        string ShowPanelScore(List<int> rolls);
+        int GetFinalScore(List<Frame> frames);
     }
 }
