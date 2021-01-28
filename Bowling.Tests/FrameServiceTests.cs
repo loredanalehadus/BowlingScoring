@@ -82,9 +82,10 @@ namespace Bowling.Tests
         public void GetFrames_FinalFrame_ShouldHave3Rolls(List<int> inputData)
         {
             var result = sut.GetFrames(inputData);
-            var finalRolls = result.First(f => f.Number == 10).Rolls;
+            var finalFrame = result.First(f => f.Number == 10);
 
-            finalRolls.Count.Should().Be(3);
+            finalFrame.IsFinalFrame.Should().BeTrue();
+            finalFrame.Rolls.Count.Should().Be(3);
         }
 
         [Fact]

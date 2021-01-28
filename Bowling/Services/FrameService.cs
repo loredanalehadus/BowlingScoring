@@ -26,7 +26,8 @@ namespace Bowling.Services
                 var frame = new Frame
                 {
                     Number = frameNumber,
-                    Rolls = finalFrameRolls ?? GetRolls(currentThrow, rolls.ElementAt(index + 1))
+                    Rolls = finalFrameRolls ?? GetRolls(currentThrow, rolls.ElementAt(index + 1)),
+                    IsFinalFrame = Rules.IsLastFrame(frameNumber)
                 };
 
                 frames.Add(frame);
