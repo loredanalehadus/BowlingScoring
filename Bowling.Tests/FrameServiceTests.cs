@@ -17,7 +17,8 @@ namespace Bowling.Tests
 
         [Theory]
         [MemberData(nameof(AverageThrows))]
-        [MemberData(nameof(AverageThrowsWithBonusRoll))]
+        [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
+        [MemberData(nameof(AverageThrowsWithBonusRollSpare))]
         [MemberData(nameof(BestThrows))]
         [MemberData(nameof(WorstThrows))]
         public void GetFrames_GivenInput_ShouldReturn10Frames(List<int> inputData)
@@ -26,10 +27,10 @@ namespace Bowling.Tests
             result.Count.Should().Be(10);
         }
 
-        [Fact]
-        public void GetFrames_NormalFrameWithSpare_ShouldCheckEachRoll()
+        [Theory]
+        [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
+        public void GetFrames_NormalFrameWithSpare_ShouldCheckEachRoll(List<int> inputData)
         {
-            var inputData = new List<int> { 0, 3, 5, 0, 0, 10, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 10, 2, 5 };
             var result = sut.GetFrames(inputData);
 
             var rolls = result.First(f => f.Number == 3).Rolls;
@@ -45,10 +46,10 @@ namespace Bowling.Tests
             secondThrow.IsSpare.Should().BeTrue();
         }
 
-        [Fact]
-        public void GetFrames_NormalFrameWithStrike_ShouldCheckEachRoll()
+        [Theory]
+        [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
+        public void GetFrames_NormalFrameWithStrike_ShouldCheckEachRoll(List<int> inputData)
         {
-            var inputData = new List<int> { 0, 3, 5, 0, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 10, 2, 5 };
             var result = sut.GetFrames(inputData);
 
             var rolls = result.First(f => f.Number == 9).Rolls;
@@ -77,7 +78,7 @@ namespace Bowling.Tests
         }
 
         [Theory]
-        [MemberData(nameof(AverageThrowsWithBonusRoll))]
+        [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
         [MemberData(nameof(BestThrows))]
         public void GetFrames_FinalFrame_ShouldHave3Rolls(List<int> inputData)
         {
@@ -88,10 +89,10 @@ namespace Bowling.Tests
             finalFrame.Rolls.Count.Should().Be(3);
         }
 
-        [Fact]
-        public void GetFrames_FinalFrameHas1Strike_ShouldCheckEachRoll()
+        [Theory]
+        [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
+        public void GetFrames_FinalFrameHas1Strike_ShouldCheckEachRoll(List<int> inputData)
         {
-            var inputData = new List<int> { 0, 3, 5, 0, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 10, 2, 5 };
             var result = sut.GetFrames(inputData);
             var rolls = result.First(f => f.Number == 10).Rolls;
 
@@ -108,10 +109,10 @@ namespace Bowling.Tests
             thirdRoll.IsSpare.Should().BeFalse();
         }
 
-        [Fact]
-        public void GetFrames_FinalFrameHas1Spare_ShouldCheckEachRoll()
+        [Theory]
+        [MemberData(nameof(AverageThrowsWithBonusRollSpare))]
+        public void GetFrames_FinalFrameHas1Spare_ShouldCheckEachRoll(List<int> inputData)
         {
-            var inputData = new List<int> { 0, 3, 5, 0, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 2, 8, 10 };
             var result = sut.GetFrames(inputData);
             var rolls = result.First(f => f.Number == 10).Rolls;
 
@@ -153,9 +154,13 @@ namespace Bowling.Tests
             yield return new object[] { new List<int> { 2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 3, 2 } };
         }
 
-        public static IEnumerable<object[]> AverageThrowsWithBonusRoll()
+        public static IEnumerable<object[]> AverageThrowsWithBonusRollStrike()
         {
             yield return new object[] { new List<int> { 0, 3, 5, 0, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 10, 2, 5 } };
+        }
+
+        public static IEnumerable<object[]> AverageThrowsWithBonusRollSpare()
+        {
             yield return new object[] { new List<int> { 0, 3, 5, 0, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 2, 8, 10 } };
         }
 

@@ -47,16 +47,5 @@ namespace Bowling.Services
 
             return frames.Sum(f => f.Score);
         }
-
-        private int GetFrameScoreForStrike(List<Frame> frames, int index)
-        {
-            if (frames[index + 1].Rolls.Any(r => r.IsStrike))
-            {
-                return frames[index].Score = 20 + frames[index + 1].Rolls.First().Value;
-            }
-
-            return frames[index].Score = 10 + frames[index + 1].Rolls.Sum(r => r.Value);
-        }
-
     }
 }

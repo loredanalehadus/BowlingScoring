@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bowling.Models;
 
-namespace Bowling.Tests.TestData.Frames
+namespace Bowling.Tests.TestData
 {
     public class AverageFrames : IEnumerable<object[]>
     {

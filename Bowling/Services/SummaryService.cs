@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using Bowling.Interfaces;
 using Bowling.Models;
 
 namespace Bowling.Services
 {
-    public class GameSummary
+    public class SummaryService : ISummaryService
     {
+        private IScoreService scoreService;
+
+        public SummaryService(IScoreService scoreService)
+        {
+            this.scoreService = scoreService;
+        }
+
         public string Print(List<Frame> frames)
         {
             var output = new StringBuilder().Append("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |");
@@ -88,7 +96,7 @@ namespace Bowling.Services
                                 output.Append("/");
                             }
 
-                            if (roll.Value > 0 && roll.Value < 10)
+                            if (roll.Value > 0 && roll.Value < 10 && !roll.IsSpare)
                             {
                                 output.Append($"{roll.Value}");
                             }
@@ -126,6 +134,9 @@ namespace Bowling.Services
 
                 output.Append("|");
             }
+
+            output.AppendLine();
+            output.AppendLine($"score: {scoreService.GetFinalScore(frames).ToString()}");
             return output.ToString();
         }
     }
