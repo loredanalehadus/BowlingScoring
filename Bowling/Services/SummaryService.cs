@@ -7,7 +7,7 @@ namespace Bowling.Services
 {
     public class SummaryService : ISummaryService
     {
-        private IScoreService scoreService;
+        private readonly IScoreService scoreService;
 
         public SummaryService(IScoreService scoreService)
         {
@@ -16,123 +16,18 @@ namespace Bowling.Services
 
         public string Print(List<Frame> frames)
         {
-            var output = new StringBuilder().Append("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |");
-            output.AppendLine().Append("|");
+            var output = new StringBuilder().AppendLine(Rules.FrameHeader).Append(Rules.FrameDelimiter);
 
             foreach (var frame in frames)
             {
                 foreach (var roll in frame.Rolls)
                 {
-                    if (roll.Try == 1 && !frame.IsFinalFrame)
-                    {
-                        if (roll.Value == 0)
-                        {
-                            output.Append("-, ");
-                        }
-
-                        if (roll.IsStrike)
-                        {
-                            output.Append("X   ");
-                        }
-
-                        if (roll.Value > 0 && roll.Value < 10)
-                        {
-                            output.Append($"{roll.Value}, ");
-                        }
-                    }
-
-                    if (roll.Try == 2 && !frame.IsFinalFrame)
-                    {
-                        if (roll.Value == 0)
-                        {
-                            output.Append("-");
-                        }
-
-                        if (roll.Value > 0 && roll.Value < 10 && !roll.IsSpare)
-                        {
-                            output.Append(roll.Value);
-                        }
-
-                        if (roll.IsSpare)
-                        {
-                            output.Append("/");
-                        }
-                    }
-
-                    if (frame.IsFinalFrame)
-                    {
-                        if (roll.Try == 1)
-                        {
-                            if (roll.Value == 0)
-                            {
-                                output.Append("-, ");
-                            }
-
-                            if (roll.IsStrike)
-                            {
-                                output.Append("X, ");
-                            }
-
-                            if (roll.Value > 0 && roll.Value < 10)
-                            {
-                                output.Append($"{roll.Value}, ");
-                            }
-                        }
-
-                        if (roll.Try == 2)
-                        {
-                            if (roll.Value == 0)
-                            {
-                                output.Append("-");
-                            }
-
-                            if (roll.IsStrike)
-                            {
-                                output.Append("X");
-                            }
-
-                            if (roll.IsSpare)
-                            {
-                                output.Append("/");
-                            }
-
-                            if (roll.Value > 0 && roll.Value < 10 && !roll.IsSpare)
-                            {
-                                output.Append($"{roll.Value}");
-                            }
-                        }
-
-                        if (roll.Try == 3)
-                        {
-                            if (roll.Value == 0)
-                            {
-                                output.Append(", -");
-                            }
-
-                            if (roll.Value > 0 && roll.Value < 10 && !roll.IsSpare)
-                            {
-                                output.Append($", {roll.Value}");
-                            }
-
-                            if (roll.IsStrike)
-                            {
-                                output.Append(", X");
-                            }
-
-                            if (roll.IsSpare)
-                            {
-                                output.Append(", /");
-                            }
-                        }
-                    }
+                    output
+                        .Append(Rules.GetSymbol(roll.Value, roll.IsSpare))
+                        .Append(Rules.GetSpacing(roll, frame));
                 }
 
-                if (frame.Rolls.Count == 2 && frame.IsFinalFrame)
-                {
-                    output.Append("   ");
-                }
-
-                output.Append("|");
+                output.Append(Rules.FrameDelimiter);
             }
 
             output.AppendLine();
