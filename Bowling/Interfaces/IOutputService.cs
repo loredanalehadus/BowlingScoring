@@ -3,7 +3,7 @@ using Bowling.Models;
 
 namespace Bowling.Interfaces
 {
-    public interface ISummaryService
+    public interface IOutputService
     {
         string Print(List<Frame> frames);
     }

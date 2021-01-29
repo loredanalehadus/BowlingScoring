@@ -35,7 +35,7 @@ namespace Bowling
                         .AddSingleton<IGameService, GameService>()
                         .AddSingleton<IScoreService, ScoreService>()
                         .AddSingleton<IFrameService, FrameService>()
-                        .AddSingleton<ISummaryService, SummaryService>());
+                        .AddSingleton<IOutputService, OutputService>());
         }
     }
 }

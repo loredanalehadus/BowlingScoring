@@ -1,19 +1,18 @@
-﻿using System;
-using Bowling.Interfaces;
+﻿using Bowling.Interfaces;
 
-namespace Bowling
+namespace Bowling.Services
 {
     public class GameService : IGameService
     {
         private IInputService inputService;
         private IFrameService frameService;
-        private ISummaryService summaryService;
+        private IOutputService outputService;
 
-        public GameService(IInputService inputService, IFrameService frameService, ISummaryService summaryService)
+        public GameService(IInputService inputService, IFrameService frameService, IOutputService outputService)
         {
             this.inputService = inputService;
             this.frameService = frameService;
-            this.summaryService = summaryService;
+            this.outputService = outputService;
         }
 
         public string StartGame(string inputFilePath)
@@ -21,7 +20,7 @@ namespace Bowling
             var input = inputService.ReadFromFile(inputFilePath);
             var groupedFrames = frameService.GetFrames(input);
 
-            return summaryService.Print(groupedFrames);
+            return outputService.Print(groupedFrames);
         }
     }
 }

@@ -18,25 +18,22 @@ namespace Bowling.Services
                     currentFrame.Score = FrameRollsSum(currentFrame.Rolls);
                     continue;
                 }
-                
+
                 if (Rules.FrameHasStrike(currentFrame))
                 {
-                    var numberOfFramesToTake = frames[i + 1].IsFinalFrame ? 1 : 2;
-                    var rolls = frames.GetRange(i + 1, numberOfFramesToTake).SelectMany(f => f.Rolls).Take(2);
-
-                    currentFrame.Score = Rules.StrikeScore + FrameRollsSum(rolls);
+                    currentFrame.Score = Rules.StrikeScore + FrameRollsSum(GetNextRolls(frames, i));
                 }
 
                 if (Rules.FrameHasSpare(currentFrame))
                 {
-                    currentFrame.Score = Rules.StrikeScore + FirstFrameRollValue(frames[i + 1]);
+                    currentFrame.Score = Rules.StrikeScore + FirstRollValueInFrame(frames[i + 1]);
                 }
             }
 
             return frames.Sum(f => f.Score);
         }
 
-        private int FirstFrameRollValue(Frame frame)
+        private int FirstRollValueInFrame(Frame frame)
         {
             return frame.Rolls.First(r => r.Number == 1).Value;
         }
@@ -44,6 +41,16 @@ namespace Bowling.Services
         private int FrameRollsSum(IEnumerable<Roll> rolls)
         {
             return rolls.Sum(r => r.Value);
+        }
+
+        private IEnumerable<Roll> GetNextRolls(List<Frame> frames, int index)
+        {
+            var numberOfFramesToTake = frames[index + 1].IsFinalFrame ? 1 : 2;
+
+            return frames
+                .GetRange(index + 1, numberOfFramesToTake)
+                .SelectMany(f => f.Rolls)
+                .Take(2);
         }
     }
 }

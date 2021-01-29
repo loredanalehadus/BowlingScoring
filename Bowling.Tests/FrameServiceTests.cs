@@ -76,7 +76,6 @@ namespace Bowling.Tests
             finalRolls.Last().IsStrike.Should().BeFalse();
             finalRolls.Last().IsSpare.Should().BeFalse();
         }
-        //todo: frame number check in member data
 
         [Theory]
         [MemberData(nameof(AverageThrowsWithBonusRollStrike))]

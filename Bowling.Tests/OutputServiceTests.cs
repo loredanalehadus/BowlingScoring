@@ -10,16 +10,16 @@ using Xunit;
 
 namespace Bowling.Tests
 {
-    public class SummaryServiceTests
+    public class OutputServiceTests
     {
         private readonly Mock<IScoreService> mockScoreService;
-        private readonly SummaryService sut;
+        private readonly OutputService sut;
 
-        public SummaryServiceTests()
+        public OutputServiceTests()
         {
             mockScoreService = new Mock<IScoreService>();
 
-            sut = new SummaryService(mockScoreService.Object);
+            sut = new OutputService(mockScoreService.Object);
         }
 
         [Theory]
