@@ -24,7 +24,7 @@ namespace Bowling.Tests
         [ClassData(typeof(WorstFrames))]
         public void GetFinalScore_GivenFrames_ShouldCalculateScore(List<Frame> frames, int expectedScore)
         {
-            var result = sut.GetFinalScore(frames);
+            var result = sut.GetTotalScore(frames);
             result.Should().Be(expectedScore);
         }
     }

@@ -29,7 +29,7 @@ namespace Bowling.Tests
 
         [Theory]
         [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
-        public void GetFrames_NormalFrameWithSpare_ShouldCheckEachRoll(List<int> inputData)
+        public void GetFrames_NormalFrameWithSpare_ShouldCheckSpareRoll(List<int> inputData)
         {
             var result = sut.GetFrames(inputData);
 
@@ -37,18 +37,18 @@ namespace Bowling.Tests
 
             rolls.Count.Should().Be(2);
 
-            var firstThrow = rolls.First(r => r.Try == 1);
+            var firstThrow = rolls.First(r => r.Number == 1);
             firstThrow.IsStrike.Should().BeFalse();
             firstThrow.IsSpare.Should().BeFalse();
 
-            var secondThrow = rolls.First(r => r.Try == 2);
+            var secondThrow = rolls.First(r => r.Number == 2);
             secondThrow.IsStrike.Should().BeFalse();
             secondThrow.IsSpare.Should().BeTrue();
         }
 
         [Theory]
         [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
-        public void GetFrames_NormalFrameWithStrike_ShouldCheckEachRoll(List<int> inputData)
+        public void GetFrames_NormalFrameWithStrike_ShouldCheckStrikeRoll(List<int> inputData)
         {
             var result = sut.GetFrames(inputData);
 
@@ -56,7 +56,7 @@ namespace Bowling.Tests
 
             rolls.Count.Should().Be(1);
 
-            var firstThrow = rolls.First(r => r.Try == 1);
+            var firstThrow = rolls.First(r => r.Number == 1);
             firstThrow.IsStrike.Should().BeTrue();
             firstThrow.IsSpare.Should().BeFalse();
         }
@@ -76,6 +76,7 @@ namespace Bowling.Tests
             finalRolls.Last().IsStrike.Should().BeFalse();
             finalRolls.Last().IsSpare.Should().BeFalse();
         }
+        //todo: frame number check in member data
 
         [Theory]
         [MemberData(nameof(AverageThrowsWithBonusRollStrike))]
@@ -96,15 +97,15 @@ namespace Bowling.Tests
             var result = sut.GetFrames(inputData);
             var rolls = result.First(f => f.Number == 10).Rolls;
 
-            var firstRoll = rolls.First(r => r.Try == 1);
+            var firstRoll = rolls.First(r => r.Number == 1);
             firstRoll.IsStrike.Should().BeTrue();
             firstRoll.IsSpare.Should().BeFalse();
 
-            var secondRoll = rolls.First(r => r.Try == 2);
+            var secondRoll = rolls.First(r => r.Number == 2);
             secondRoll.IsStrike.Should().BeFalse();
             secondRoll.IsSpare.Should().BeFalse();
 
-            var thirdRoll = rolls.First(r => r.Try == 3);
+            var thirdRoll = rolls.First(r => r.Number == 3);
             thirdRoll.IsStrike.Should().BeFalse();
             thirdRoll.IsSpare.Should().BeFalse();
         }
@@ -116,15 +117,15 @@ namespace Bowling.Tests
             var result = sut.GetFrames(inputData);
             var rolls = result.First(f => f.Number == 10).Rolls;
 
-            var firstRoll = rolls.First(r => r.Try == 1);
+            var firstRoll = rolls.First(r => r.Number == 1);
             firstRoll.IsStrike.Should().BeFalse();
             firstRoll.IsSpare.Should().BeFalse();
 
-            var secondRoll = rolls.First(r => r.Try == 2);
+            var secondRoll = rolls.First(r => r.Number == 2);
             secondRoll.IsStrike.Should().BeFalse();
             secondRoll.IsSpare.Should().BeTrue();
 
-            var thirdRoll = rolls.First(r => r.Try == 3);
+            var thirdRoll = rolls.First(r => r.Number == 3);
             thirdRoll.IsStrike.Should().BeTrue();
             thirdRoll.IsSpare.Should().BeFalse();
         }
@@ -136,15 +137,15 @@ namespace Bowling.Tests
             var result = sut.GetFrames(inputData);
             var rolls = result.First(f => f.Number == 10).Rolls;
 
-            var firstRoll = rolls.First(r => r.Try == 1);
+            var firstRoll = rolls.First(r => r.Number == 1);
             firstRoll.IsStrike.Should().BeTrue();
             firstRoll.IsSpare.Should().BeFalse();
 
-            var secondRoll = rolls.First(r => r.Try == 2);
+            var secondRoll = rolls.First(r => r.Number == 2);
             secondRoll.IsStrike.Should().BeTrue();
             secondRoll.IsSpare.Should().BeFalse();
 
-            var thirdRoll = rolls.First(r => r.Try == 3);
+            var thirdRoll = rolls.First(r => r.Number == 3);
             thirdRoll.IsStrike.Should().BeTrue();
             thirdRoll.IsSpare.Should().BeFalse();
         }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using Bowling.Interfaces;
 using Bowling.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,17 +8,17 @@ namespace Bowling
 {
     public class Program
     {
-        private static Task Main(string[] args)
+        private static void Main(string[] args)
         {
             using var host = CreateHostBuilder(args).Build();
 
             using var serviceScope = host.Services.CreateScope();
             var provider = serviceScope.ServiceProvider;
 
-            var service = provider.GetRequiredService<IGame>();
-            service.StartGame(@".\Input.csv");
+            var gameService = provider.GetRequiredService<IGameService>();
+            var score = gameService.StartGame(@".\Input.csv");
 
-            return host.RunAsync();
+            Console.WriteLine(score);
         }
 
         private static IHostBuilder
@@ -32,7 +32,7 @@ namespace Bowling
                         //.AddSingleton<IInputReader>(sp
                         //    => new ConsoleInputReader(args[0]))
                         .AddSingleton<IInputService, InputService>()
-                        .AddSingleton<IGame, Game>()
+                        .AddSingleton<IGameService, GameService>()
                         .AddSingleton<IScoreService, ScoreService>()
                         .AddSingleton<IFrameService, FrameService>()
                         .AddSingleton<ISummaryService, SummaryService>());

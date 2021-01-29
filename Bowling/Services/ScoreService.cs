@@ -7,45 +7,43 @@ namespace Bowling.Services
 {
     public class ScoreService : IScoreService
     {
-        public int GetFinalScore(List<Frame> frames)
+        public int GetTotalScore(List<Frame> frames)
         {
-            for (int i = 0; i < frames.Count; i++)
+            for (var i = 0; i < frames.Count; i++)
             {
-                if (frames[i].IsFinalFrame)
+                var currentFrame = frames[i];
+
+                if (currentFrame.IsFinalFrame || !(Rules.FrameHasSpare(currentFrame) || Rules.FrameHasStrike(currentFrame)))
                 {
-                    frames[i].Score = frames[i].Rolls.Sum(r => r.Value);
-                    break;
+                    currentFrame.Score = FrameRollsSum(currentFrame.Rolls);
+                    continue;
+                }
+                
+                if (Rules.FrameHasStrike(currentFrame))
+                {
+                    var numberOfFramesToTake = frames[i + 1].IsFinalFrame ? 1 : 2;
+                    var rolls = frames.GetRange(i + 1, numberOfFramesToTake).SelectMany(f => f.Rolls).Take(2);
+
+                    currentFrame.Score = Rules.StrikeScore + FrameRollsSum(rolls);
                 }
 
-                if (!frames[i].Rolls.Any(r => r.IsStrike || r.IsSpare))
+                if (Rules.FrameHasSpare(currentFrame))
                 {
-                    frames[i].Score = frames[i].Rolls.Sum(r => r.Value);
-                }
-
-                if (frames[i].Rolls.Any(r => r.IsSpare))
-                {
-                    frames[i].Score = 10 + frames[i + 1].Rolls.First(r => r.Try == 1).Value;
-                }
-
-                if (frames[i].Rolls.Any(r => r.IsStrike))
-                {
-                    if (frames[i + 1].IsFinalFrame)
-                    {
-                        frames[i].Score = 10 + frames[i + 1].Rolls.Where(r => r.Try <= 2).Sum(r => r.Value);
-                        continue;
-                    }
-
-                    if (frames[i + 1].Rolls.Any(r => r.IsStrike))
-                    {
-                        frames[i].Score = 20 + frames[i + 2].Rolls.First(r => r.Try <= 1).Value;
-                        continue;
-                    }
-
-                    frames[i].Score = 10 + frames[i + 1].Rolls.Sum(r => r.Value);
+                    currentFrame.Score = Rules.StrikeScore + FirstFrameRollValue(frames[i + 1]);
                 }
             }
 
             return frames.Sum(f => f.Score);
+        }
+
+        private int FirstFrameRollValue(Frame frame)
+        {
+            return frame.Rolls.First(r => r.Number == 1).Value;
+        }
+
+        private int FrameRollsSum(IEnumerable<Roll> rolls)
+        {
+            return rolls.Sum(r => r.Value);
         }
     }
 }

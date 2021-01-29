@@ -23,7 +23,7 @@ namespace Bowling.Services
                 foreach (var roll in frame.Rolls)
                 {
                     output
-                        .Append(Rules.GetSymbol(roll.Value, roll.IsSpare))
+                        .Append(Rules.GetRollSymbol(roll.Value, roll.IsSpare))
                         .Append(Rules.GetSpacing(roll, frame));
                 }
 
@@ -31,7 +31,7 @@ namespace Bowling.Services
             }
 
             output.AppendLine();
-            output.AppendLine($"score: {scoreService.GetFinalScore(frames).ToString()}");
+            output.AppendLine($"score: {scoreService.GetTotalScore(frames).ToString()}");
             return output.ToString();
         }
     }

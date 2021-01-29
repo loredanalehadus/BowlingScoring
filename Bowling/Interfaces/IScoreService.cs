@@ -5,6 +5,6 @@ namespace Bowling.Interfaces
 {
     public interface IScoreService
     {
-        int GetFinalScore(List<Frame> frames);
+        int GetTotalScore(List<Frame> frames);
     }
 }

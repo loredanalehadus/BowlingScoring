@@ -7,6 +7,8 @@ namespace Bowling.Services
 {
     public class FrameService : IFrameService
     {
+        private IInputService inputService;
+
         public List<Frame> GetFrames(List<int> rolls)
         {
             var frames = new List<Frame>();
@@ -14,11 +16,13 @@ namespace Bowling.Services
             var index = 0;
             List<Roll> finalFrameRolls = null;
 
+            //todo:add constant for 10
             while (frameNumber <= 10)
             {
                 var currentThrow = rolls.ElementAt(index);
 
-                if (Rules.IsLastFrame(frameNumber) && Rules.IsBonusRoll(currentThrow, rolls.ElementAt(index + 1)))
+                //todo: investigate
+                if (/*Rules.IsLastFrame(frameNumber) &&*/ Rules.IsBonusRoll(currentThrow, rolls.ElementAt(index + 1), frameNumber))
                 {
                     finalFrameRolls = GetBonusRolls(currentThrow, rolls.ElementAt(index + 1), rolls.ElementAt(index + 2));
                 }
@@ -45,7 +49,7 @@ namespace Bowling.Services
             {
                 return new List<Roll>
                 {
-                    new Roll { Try = 1, Value = firstRoll, IsStrike = true }
+                    new Roll { Number = 1, Value = firstRoll, IsStrike = true }
                 };
             }
 
@@ -53,15 +57,15 @@ namespace Bowling.Services
             {
                 return new List<Roll>
                 {
-                    new Roll {Try = 1, Value = firstRoll},
-                    new Roll {Try = 2, Value = secondRoll, IsSpare = true}
+                    new Roll {Number = 1, Value = firstRoll},
+                    new Roll {Number = 2, Value = secondRoll, IsSpare = true}
                 };
             }
 
             return new List<Roll>
             {
-                new Roll {Try = 1, Value = firstRoll},
-                new Roll {Try = 2, Value = secondRoll}
+                new Roll {Number = 1, Value = firstRoll},
+                new Roll {Number = 2, Value = secondRoll}
             };
         }
 
@@ -69,14 +73,15 @@ namespace Bowling.Services
         {
             var rolls = GetRolls(firstThrow, secondThrow);
 
+            //todo: refactor
             if (rolls.Count == 1 && rolls.First().IsStrike)
             {
                 var followingRolls = GetRolls(secondThrow, thirdThrow);
-                followingRolls.First().Try = 2;
+                followingRolls.First().Number = 2;
 
                 if (!followingRolls.First().IsStrike)
                 {
-                    followingRolls.Last().Try = 3;
+                    followingRolls.Last().Number = 3;
                 }
 
                 rolls.AddRange(followingRolls);
@@ -86,7 +91,7 @@ namespace Bowling.Services
             {
                 rolls.Add(new Roll
                 {
-                    Try = 3,
+                    Number = 3,
                     Value = thirdThrow,
                     IsStrike = Rules.IsStrike(thirdThrow),
                     IsSpare = Rules.IsSpare(secondThrow, thirdThrow)

@@ -1,7 +1,7 @@
 ﻿namespace Bowling.Interfaces
 {
-    public interface IGame
+    public interface IGameService
     {
-        void StartGame(string inputFilePath);
+        string StartGame(string inputFilePath);
     }
 }

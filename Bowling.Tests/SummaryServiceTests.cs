@@ -26,7 +26,7 @@ namespace Bowling.Tests
         [ClassData(typeof(AverageFrames))]
         public void Print_AverageFrames_ShouldPrintResults(List<Frame> frames, int score)
         {
-            mockScoreService.Setup(service => service.GetFinalScore(frames)).Returns(score);
+            mockScoreService.Setup(service => service.GetTotalScore(frames)).Returns(score);
 
             var result = sut.Print(frames);
             var expectedResult = new StringBuilder()
@@ -42,7 +42,7 @@ namespace Bowling.Tests
         [ClassData(typeof(AverageFramesWithFinalBonusRoll))]
         public void Print_AverageFramesWithBonusRoll_ShouldPrintResults(List<Frame> frames, int score)
         {
-            mockScoreService.Setup(service => service.GetFinalScore(frames)).Returns(score);
+            mockScoreService.Setup(service => service.GetTotalScore(frames)).Returns(score);
             
             var result = sut.Print(frames);
             var expectedResult = new StringBuilder()
@@ -58,7 +58,7 @@ namespace Bowling.Tests
         [ClassData(typeof(GoodFramesWithFinalBonusRoll))]
         public void Print_GoodFramesWithFinalBonusRoll_ShouldPrintResults(List<Frame> frames, int score)
         {
-            mockScoreService.Setup(service => service.GetFinalScore(frames)).Returns(score);
+            mockScoreService.Setup(service => service.GetTotalScore(frames)).Returns(score);
             
             var result = sut.Print(frames);
             var expectedResult = new StringBuilder()
@@ -74,7 +74,7 @@ namespace Bowling.Tests
         [ClassData(typeof(AllStrikes))]
         public void Print_AllStrikes_ShouldPrintResults(List<Frame> frames, int score)
         {
-            mockScoreService.Setup(service => service.GetFinalScore(frames)).Returns(score);
+            mockScoreService.Setup(service => service.GetTotalScore(frames)).Returns(score);
 
             var result = sut.Print(frames);
             var expectedResult = new StringBuilder()
@@ -90,7 +90,7 @@ namespace Bowling.Tests
         [ClassData(typeof(WorstFrames))]
         public void Print_WorstFrames_ShouldPrintResults(List<Frame> frames, int score)
         {
-            mockScoreService.Setup(service => service.GetFinalScore(frames)).Returns(score);
+            mockScoreService.Setup(service => service.GetTotalScore(frames)).Returns(score);
 
             var result = sut.Print(frames);
             var expectedResult = new StringBuilder()
