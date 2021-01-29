@@ -16,7 +16,7 @@ namespace Bowling
             var provider = serviceScope.ServiceProvider;
 
             var gameService = provider.GetRequiredService<IGameService>();
-            var score = gameService.StartGame(@".\Input.csv");
+            var score = gameService.StartGame(@".\Resources\Input.csv");
 
             Console.WriteLine(score);
         }
@@ -28,9 +28,6 @@ namespace Bowling
                 .ConfigureServices((_,
                         services) =>
                     services
-
-                        //.AddSingleton<IInputReader>(sp
-                        //    => new ConsoleInputReader(args[0]))
                         .AddSingleton<IInputService, InputService>()
                         .AddSingleton<IGameService, GameService>()
                         .AddSingleton<IScoreService, ScoreService>()
