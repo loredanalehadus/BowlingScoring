@@ -5,11 +5,18 @@ using Bowling.Interfaces;
 
 namespace Bowling.Services
 {
-    public class InputService : IInputService
+    public class ConsoleInputService : IInputService
     {
-        public List<int> ReadFromFile(string path)
+        private string filePath;
+
+        public ConsoleInputService(string filePath)
         {
-            var input = File.ReadAllText(path);
+            this.filePath = filePath;
+        }
+
+        public List<int> ReadFromFile()
+        {
+            var input = File.ReadAllText(filePath);
             return input.Split(',').Select(int.Parse).ToList();
         }
     }

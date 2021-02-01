@@ -2,6 +2,6 @@
 {
     public interface IGameService
     {
-        string StartGame(string inputFilePath);
+        string StartGame();
     }
 }

@@ -15,9 +15,9 @@ namespace Bowling.Services
             this.outputService = outputService;
         }
 
-        public string StartGame(string inputFilePath)
+        public string StartGame()
         {
-            var input = inputService.ReadFromFile(inputFilePath);
+            var input = inputService.ReadFromFile();
             var groupedFrames = frameService.GetFrames(input);
 
             return outputService.Print(groupedFrames);

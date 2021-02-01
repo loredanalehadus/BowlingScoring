@@ -31,7 +31,9 @@ Navigate to `Bowling` folder, where the console project is located.
 
 and then run:
 
-```dotnet run```
+```dotnet run <input-file-path>```
+
+e.g.: ```Bowling>dotnet run ".\Resources\Input.csv"```
 
 The application starts and shows the output:
 
@@ -53,7 +55,7 @@ score: 90
 The American 10 Pin-Bowling rules are followed. More info can be found [here](https://www.topendsports.com/sport/tenpin/scoring.htm).
 
 ## Input
-A .csv file is located to `\Bowling\Resources` folder with the input of the application. The values represent the bowl throws in a bowling game.
+A default .csv file is located to `\Bowling\Resources` folder with the input of the application. The values represent the bowl throws in a bowling game.
 
 ```2, 3, 5, 4, 9, 1, 2, 5, 3, 2, 4, 2, 3, 3, 4, 6, 10, 3, 2```
 

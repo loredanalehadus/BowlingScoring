@@ -4,6 +4,6 @@ namespace Bowling.Interfaces
 {
     public interface IInputService
     {
-        List<int> ReadFromFile(string path);
+        List<int> ReadFromFile();
     }
 }
