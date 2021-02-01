@@ -7,7 +7,7 @@ namespace Bowling.Services
 {
     public class ConsoleInputService : IInputService
     {
-        private string filePath;
+        private readonly string filePath;
 
         public ConsoleInputService(string filePath)
         {

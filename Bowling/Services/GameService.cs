@@ -4,9 +4,9 @@ namespace Bowling.Services
 {
     public class GameService : IGameService
     {
-        private IInputService inputService;
-        private IFrameService frameService;
-        private IOutputService outputService;
+        private readonly IInputService inputService;
+        private readonly IFrameService frameService;
+        private readonly IOutputService outputService;
 
         public GameService(IInputService inputService, IFrameService frameService, IOutputService outputService)
         {
