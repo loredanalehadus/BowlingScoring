@@ -6,7 +6,7 @@ namespace Bowling
     public static class Rules
     {
         public const int StrikeScore = 10;
-        private const int SpareScore = 10;
+        public const int SpareScore = 10;
         public const int GutterScore = 0;
         public const int MaxFrameNumber = 10;
         public const string FrameDelimiter = "|";

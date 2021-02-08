@@ -12,25 +12,33 @@ namespace Bowling.Services
             for (var i = 0; i < frames.Count; i++)
             {
                 var currentFrame = frames[i];
-
-                if (currentFrame.IsFinalFrame || !(Rules.FrameHasSpare(currentFrame) || Rules.FrameHasStrike(currentFrame)))
-                {
-                    currentFrame.Score = FrameRollsSum(currentFrame.Rolls);
-                    continue;
-                }
-
-                if (Rules.FrameHasStrike(currentFrame))
-                {
-                    currentFrame.Score = Rules.StrikeScore + FrameRollsSum(GetNextRolls(frames, i));
-                }
-
-                if (Rules.FrameHasSpare(currentFrame))
-                {
-                    currentFrame.Score = Rules.StrikeScore + FirstRollValueInFrame(frames[i + 1]);
-                }
+                currentFrame.Score = CalculateScore(frames, i);
             }
 
             return frames.Sum(f => f.Score);
+        }
+
+        private int CalculateScore(List<Frame> frames, int index)
+        {
+            var score = 0;
+            var currentFrame = frames[index];
+
+            if (currentFrame.IsFinalFrame || !(Rules.FrameHasSpare(currentFrame) || Rules.FrameHasStrike(currentFrame)))
+            {
+                return FrameRollsSum(currentFrame.Rolls);
+            }
+
+            if (Rules.FrameHasStrike(currentFrame))
+            {
+                score = Rules.StrikeScore + FrameRollsSum(GetNextRolls(frames, index));
+            }
+
+            if (Rules.FrameHasSpare(currentFrame))
+            {
+                score = Rules.SpareScore + FirstRollValueInFrame(frames[index + 1]);
+            }
+
+            return score;
         }
 
         private int FirstRollValueInFrame(Frame frame)
