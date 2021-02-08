@@ -31,7 +31,7 @@ namespace Bowling.Services
             }
 
             output.AppendLine();
-            output.AppendLine($"score: {scoreService.GetTotalScore(frames).ToString()}");
+            output.Append($"score: {scoreService.GetTotalScore(frames).ToString()}");
             return output.ToString();
         }
 

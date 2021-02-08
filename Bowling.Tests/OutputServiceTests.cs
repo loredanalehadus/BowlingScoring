@@ -32,7 +32,7 @@ namespace Bowling.Tests
             var expectedResult = new StringBuilder()
                 .AppendLine("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |")
                 .AppendLine("|2, 3|5, 4|9, /|2, 5|3, 2|4, 2|3, 3|4, /|X   |3, 2   |")
-                .AppendLine($"score: {score.ToString()}")
+                .Append($"score: {score.ToString()}")
                 .ToString();
 
             result.Should().Be(expectedResult);
@@ -48,7 +48,7 @@ namespace Bowling.Tests
             var expectedResult = new StringBuilder()
                 .AppendLine("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |")
                 .AppendLine("|-, 3|5, -|9, /|2, 5|3, 2|4, 2|3, 3|4, /|X   |X, 2, 5|")
-                .AppendLine($"score: {score.ToString()}")
+                .Append($"score: {score.ToString()}")
                 .ToString();
 
             result.Should().Be(expectedResult);
@@ -64,7 +64,7 @@ namespace Bowling.Tests
             var expectedResult = new StringBuilder()
                 .AppendLine("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |")
                 .AppendLine("|-, 3|5, -|9, /|X   |X   |4, /|3, 3|4, /|X   |2, /, X|")
-                .AppendLine($"score: {score.ToString()}")
+                .Append($"score: {score.ToString()}")
                 .ToString();
 
             result.Should().Be(expectedResult);
@@ -80,7 +80,7 @@ namespace Bowling.Tests
             var expectedResult = new StringBuilder()
                 .AppendLine("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |")
                 .AppendLine("|X   |X   |X   |X   |X   |X   |X   |X   |X   |X, X, X|")
-                .AppendLine($"score: {score.ToString()}")
+                .Append($"score: {score.ToString()}")
                 .ToString();
 
             result.Should().Be(expectedResult);
@@ -96,7 +96,7 @@ namespace Bowling.Tests
             var expectedResult = new StringBuilder()
                 .AppendLine("| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10   |")
                 .AppendLine("|-, -|-, -|-, -|-, -|-, -|-, -|-, -|-, -|-, -|-, -   |")
-                .AppendLine($"score: {score.ToString()}")
+                .Append($"score: {score.ToString()}")
                 .ToString();
 
             result.Should().Be(expectedResult);
