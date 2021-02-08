@@ -33,7 +33,7 @@ and then run:
 
 ```dotnet run <input-file-path>```
 
-e.g.: ```Bowling>dotnet run ".\Resources\Input.csv"```
+e.g.: ```dotnet run ".\Resources\Input.csv"```
 
 The application starts and shows the output:
 
